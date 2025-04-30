@@ -35,6 +35,9 @@ ticker = st.sidebar.text_input("Ticker (ex: AAPL)", value="AAPL").upper()
 spot_price = get_last_price(ticker)
 if spot_price:
     st.sidebar.success(f"Prix spot actuel : {spot_price} USD")
+elif spot_price = -1:
+    st.sidebar.error("Impossible de récupérer le prix spot.")
+    spot_price = st.sidebar.number_input("Entrez le prix spot manuellement", value=100.0)
 else:
     st.sidebar.error("Impossible de récupérer le prix spot.")
 
