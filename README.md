@@ -57,6 +57,10 @@ L'application est également accessible directement sur Streamlit Cloud à l'adr
 ├── binomial_tree.py         # Modèle Binomial CRR
 ├── monte_carlo.py           # Modèle Monte Carlo
 ├── documentation.tex        # Documentation LaTeX complète
+├── documentation.pdf        # Documentation PDF (LaTeX compilé)
+├── main.py                  # Première version des modèles sans interface graphique et manuelle
+├── main_v2.py               # Seconde version des modèles avec récupération des prix sur Yahoo Finance
+├── documentation.tex        # Documentation LaTeX complète
 ├── requirements.txt         # Dépendances Python
 ├── README.md                # Ce fichier
 ```
