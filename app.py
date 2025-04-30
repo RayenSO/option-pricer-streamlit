@@ -16,7 +16,7 @@ def get_last_price(ticker):
         last_price = data.history(period="1d")['Close'].iloc[-1]
         return round(last_price, 2)
     except:
-        return None
+        return -1
 
 def calculate_T(maturity_date):
     today = datetime.datetime.today()
@@ -33,8 +33,11 @@ method = st.sidebar.selectbox("Méthode de Pricing", ("Black-Scholes", "Binomial
 type_option = st.sidebar.selectbox("Type d'Option", ("Européenne", "Américaine"))
 ticker = st.sidebar.text_input("Ticker (ex: AAPL)", value="AAPL").upper()
 spot_price = get_last_price(ticker)
-if spot_price:
+if spot_price and spot_price != -1:
     st.sidebar.success(f"Prix spot actuel : {spot_price} USD")
+elif spot_price == -1:
+    st.sidebar.error("Impossible de récupérer le prix spot.")
+    spot_price = st.sidebar.number_input("Entrez le prix spot manuellement", value=100.0)
 else:
     st.sidebar.error("Impossible de récupérer le prix spot.")
 
