@@ -47,7 +47,7 @@ streamlit run app.py
 ## 🌐 Version en ligne
 
 L'application est également accessible directement sur Streamlit Cloud à l'adresse suivante :
-👉 option-pricer-app-rayen-and-eliasy.streamlit.app
+👉 [Application en ligne](https://option-pricer-app-rayen-and-eliasy.streamlit.app/)
 
 # 📂 Contenu du projet
 
