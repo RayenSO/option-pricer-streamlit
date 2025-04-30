@@ -164,4 +164,4 @@ st.plotly_chart(fig_greeks, use_container_width=True)
 
 # Pied de page
 st.markdown("---")
-st.caption("📌 Développé avec ❤️ par Rayen & Eliasy | Modèles Black-Scholes/CRR/Monte-Carlo pour le pricing des options")
+st.caption("📌 Développé avec ❤️ par Rayen & Ny Avotra | Modèles Black-Scholes/CRR/Monte-Carlo pour le pricing des options")

@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\geometry{a4paper, margin=1in}
+
+\title{Documentation Projet: Pricing d'Options Financières}
+\author{TonNom}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+Ce projet a pour objectif de mettre en application les notions théoriques étudiées dans le cour de "Applied Mathematics for Finance" du Master 2 Gestion de Portefeuille de l'IAE Paris-Est dispensé par Monsieur Al-Wakil.
+
+Nous avons choisi de travailler sur les trois modèles vu en cours:
+\begin{itemize}
+    \item Le modèle de \textbf{Black-Scholes} (option européenne uniquement)
+    \item L'\textbf{Arbre Binomial de Cox-Ross-Rubinstein} (options européennes et américaines)
+    \item La \textbf{Méthode de Monte Carlo} (option européenne)
+\end{itemize}
+
+\section{Modèle de Black-Scholes}
+
+\subsection{Formule générale}
+
+Pour une \textbf{option Call européenne}, le prix théorique \( C \) est donné par :
+
+\begin{equation}
+C = S_0 N(d_1) - Ke^{-rT} N(d_2)
+\end{equation}
+
+Pour une \textbf{option Put européenne} :
+
+\begin{equation}
+P = Ke^{-rT} N(-d_2) - S_0 N(-d_1)
+\end{equation}
+
+où :
+
+\begin{align}
+d_1 &= \frac{\ln(S_0/K) + (r + \frac{1}{2}\sigma^2)T}{\sigma \sqrt{T}} \\
+d_2 &= d_1 - \sigma \sqrt{T}
+\end{align}
+
+\subsection{Interprétation des paramètres}
+
+\begin{itemize}
+    \item \( S_0 \) : Prix du sous-jacent aujourd'hui
+    \item \( K \) : Prix d'exercice (strike)
+    \item \( T \) : Temps à maturité (en années)
+    \item \( r \) : Taux d'intérêt sans risque (continu)
+    \item \( \sigma \) : Volatilité du sous-jacent
+    \item \( N(\cdot) \) : Fonction de répartition de la loi normale standard
+\end{itemize}
+
+\section{Arbre Binomial de Cox-Ross-Rubinstein (CRR)}
+
+\subsection{Structure de l'arbre}
+
+L'arbre binomial modélise le prix du sous-jacent par une série de montées et descentes possibles à chaque pas de temps.
+
+\begin{itemize}
+    \item Facteur de hausse : \( u = e^{\sigma \sqrt{\Delta t}} \)
+    \item Facteur de baisse : \( d = e^{-\sigma \sqrt{\Delta t}} = 1/u \)
+    \item Probabilité neutre au risque : 
+    \begin{equation}
+    p = \frac{e^{r\Delta t} - d}{u - d}
+    \end{equation}
+\end{itemize}
+
+\subsection{Calcul du prix}
+
+Le prix de l'option est obtenu par :
+
+\begin{enumerate}
+    \item Construction de l'arbre des prix de l'actif
+    \item Calcul des payoffs aux nœuds terminaux
+    \item Remontée de l'arbre par actualisation des valeurs :
+    \begin{equation}
+    \text{Valeur du nœud} = e^{-r \Delta t} (p \times \text{Valeur du nœud haut} + (1-p) \times \text{Valeur du nœud bas})
+    \end{equation}
+\end{enumerate}
+
+Pour une option américaine, on prend à chaque nœud :
+
+\[
+\text{Valeur} = \max(\text{Payoff immédiat}, \text{Valeur de continuation})
+\]
+
+\section{Méthode de Monte Carlo}
+
+\subsection{Principe général}
+
+La méthode Monte Carlo simule de nombreux chemins possibles pour le prix du sous-jacent à l'échéance selon :
+
+\begin{equation}
+S_T = S_0 \exp\left( \left(r - \frac{1}{2}\sigma^2\right)T + \sigma \sqrt{T} Z \right)
+\end{equation}
+
+où \( Z \sim \mathcal{N}(0,1) \) est un tirage aléatoire de loi normale standard.
+
+\subsection{Prix de l'option}
+
+Le prix de l'option est donné par :
+
+\begin{equation}
+\text{Prix} = e^{-rT} \mathbb{E}[\text{Payoff}]
+\end{equation}
+
+\[
+\text{Payoff Call} = \max(S_T - K, 0)
+\quad\quad
+\text{Payoff Put} = \max(K - S_T, 0)
+\]
+
+La moyenne est prise sur toutes les simulations.
+
+\section{Les Grecques (Greeks)}
+
+\subsection{Introduction}
+
+Les \textbf{Greeks} mesurent la sensibilité du prix de l'option à différentes variables de marché.
+
+\subsection{Définitions et Formules}
+
+\begin{itemize}
+    \item \textbf{Delta} : Sensibilité du prix de l'option au prix du sous-jacent.
+    \[
+    \Delta = \frac{\partial C}{\partial S_0}
+    \]
+
+    \item \textbf{Gamma} : Sensibilité du Delta au prix du sous-jacent.
+    \[
+    \Gamma = \frac{\partial^2 C}{\partial S_0^2}
+    \]
+
+    \item \textbf{Vega} : Sensibilité du prix de l'option à la volatilité du sous-jacent.
+    \[
+    \text{Vega} = \frac{\partial C}{\partial \sigma}
+    \]
+
+    \item \textbf{Theta} : Sensibilité du prix de l'option au passage du temps.
+    \[
+    \Theta = \frac{\partial C}{\partial T}
+    \]
+
+    \item \textbf{Rho} : Sensibilité du prix de l'option au taux sans risque.
+    \[
+    \text{Rho} = \frac{\partial C}{\partial r}
+    \]
+\end{itemize}
+
+\subsection{Interprétation}
+
+\begin{itemize}
+    \item \textbf{Delta} : Variation approximative du prix de l'option pour une variation de une unité du sous-jacent.
+    \item \textbf{Gamma} : Mesure la convexité ; variation du Delta.
+    \item \textbf{Vega} : Variation du prix de l'option pour une variation de 1\% de la volatilité.
+    \item \textbf{Theta} : Perte de valeur de l'option par jour qui passe.
+    \item \textbf{Rho} : Variation du prix de l'option pour une variation de 1\% du taux sans risque.
+\end{itemize}
+
+
+\end{document}
