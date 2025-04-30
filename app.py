@@ -33,7 +33,7 @@ method = st.sidebar.selectbox("Méthode de Pricing", ("Black-Scholes", "Binomial
 type_option = st.sidebar.selectbox("Type d'Option", ("Européenne", "Américaine"))
 ticker = st.sidebar.text_input("Ticker (ex: AAPL)", value="AAPL").upper()
 spot_price = get_last_price(ticker)
-if spot_price:
+if spot_price and spot_price != -1:
     st.sidebar.success(f"Prix spot actuel : {spot_price} USD")
 elif spot_price == -1:
     st.sidebar.error("Impossible de récupérer le prix spot.")
