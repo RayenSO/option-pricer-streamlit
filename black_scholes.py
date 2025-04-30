@@ -31,7 +31,7 @@ class BlackScholes:
         return norm.pdf(self.d1) / (self.S * self.sigma * math.sqrt(self.T))
     
     def vega(self):
-        return (self.S * norm.pdf(self.d1) * math.sqrt(self.T)) / 100  # Vega normalisé directement (par 1% de vol)
+        return (self.S * norm.pdf(self.d1) * math.sqrt(self.T)) / 100  
     
     def theta(self):
         term1 = -(self.S * norm.pdf(self.d1) * self.sigma) / (2 * math.sqrt(self.T))
@@ -42,7 +42,7 @@ class BlackScholes:
             term2 = self.r * self.K * math.exp(-self.r * self.T) * norm.cdf(-self.d2)
             theta_annual = term1 + term2
         
-        return theta_annual / 365  # Theta normalisé directement (par jour)
+        return theta_annual / 365  
     
     def rho(self):
         if self.option_type == "call":
@@ -50,12 +50,5 @@ class BlackScholes:
         elif self.option_type == "put":
             return -self.K * self.T * math.exp(-self.r * self.T) * norm.cdf(-self.d2)/100
 
-# Utilisation
-bs = BlackScholes(S=100, K=100, T=1, r=0.05, sigma=0.2, option_type="call")
 
-print(f"Price: {bs.price():.4f}")
-print(f"Delta: {bs.delta():.4f}")
-print(f"Gamma: {bs.gamma():.4f}")
-print(f"Vega: {bs.vega():.4f}")
-print(f"Theta: {bs.theta():.4f}")
-print(f"Rho: {bs.rho():.4f}")
+

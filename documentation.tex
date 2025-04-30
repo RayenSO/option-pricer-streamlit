@@ -9,7 +9,7 @@
 \geometry{a4paper, margin=1in}
 
 \title{Documentation Projet: Pricing d'Options Financières}
-\author{TonNom}
+\author{SOLTANI Rayen, ELIASY Ny Avotra}
 \date{\today}
 
 \begin{document}
@@ -31,6 +31,9 @@ Nous avons choisi de travailler sur les trois modèles vu en cours:
 \end{itemize}
 
 \section{Modèle de Black-Scholes}
+\subsection{Principe général}
+
+Le modèle de Black-Scholes repose sur une hypothèse de dynamique log-normale du prix du sous-jacent et permet de dériver une formule analytique fermée pour le prix des options européennes, sous certaines conditions de marché idéalisées (pas de dividende, marchés sans frais de transaction, une liquidité parfaite, volatilité et taux constants).
 
 \subsection{Formule générale}
 
@@ -161,10 +164,10 @@ Les \textbf{Greeks} mesurent la sensibilité du prix de l'option à différentes
     \]
 \end{itemize}
 
-\subsection{Interprétation}
+\subsection{Interprétation intuitive}
 
 \begin{itemize}
-    \item \textbf{Delta} : Variation approximative du prix de l'option pour une variation de une unité du sous-jacent.
+    \item \textbf{Delta} : Variation approximative du prix de l'option pour une variation de 1 unité de prix du sous-jacent.
     \item \textbf{Gamma} : Mesure la convexité ; variation du Delta.
     \item \textbf{Vega} : Variation du prix de l'option pour une variation de 1\% de la volatilité.
     \item \textbf{Theta} : Perte de valeur de l'option par jour qui passe.

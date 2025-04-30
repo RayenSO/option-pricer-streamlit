@@ -78,32 +78,21 @@ class BinomialTree:
         bt_future = BinomialTree(S=self.S, K=self.K, T=self.T - 2*self.dt, r=self.r, sigma=self.sigma, N=self.N-2, option_type=self.option_type, american=self.american)
         bt_future_price = bt_future.price()
         theta_annual = (bt_future_price - bt_now) / (2 * self.dt)
-        return theta_annual / 365  # normalisé par jour
+        return theta_annual / 365  
 
     def vega(self):
-        epsilon = 0.01  # 1% de volatilité
+        epsilon = 0.01  
         bt_plus = BinomialTree(S=self.S, K=self.K, T=self.T, r=self.r, sigma=self.sigma + epsilon, N=self.N, option_type=self.option_type, american=self.american)
         bt_minus = BinomialTree(S=self.S, K=self.K, T=self.T, r=self.r, sigma=self.sigma - epsilon, N=self.N, option_type=self.option_type, american=self.american)
 
         vega_raw = (bt_plus.price() - bt_minus.price()) / (2 * epsilon)
-        return vega_raw / 100  # normalisé par 1% de volatilité
+        return vega_raw / 100  
 
     def rho(self):
-        epsilon = 0.01  # 1% de taux
+        epsilon = 0.01  
         bt_plus = BinomialTree(S=self.S, K=self.K, T=self.T, r=self.r + epsilon, sigma=self.sigma, N=self.N, option_type=self.option_type, american=self.american)
         bt_minus = BinomialTree(S=self.S, K=self.K, T=self.T, r=self.r - epsilon, sigma=self.sigma, N=self.N, option_type=self.option_type, american=self.american)
 
         rho_raw = (bt_plus.price() - bt_minus.price()) / (2 * epsilon)
-        return rho_raw / 100  # normalisé par 1% de taux
+        return rho_raw / 100 
 
-
-# Option PUT Européenne
-bt_european = BinomialTree(S=36, K=40, T=1, r=0.06, sigma=0.2, N=100, option_type="put", american=False)
-price_european = bt_european.price()
-
-# Option PUT Américaine
-bt_american = BinomialTree(S=36, K=40, T=1, r=0.06, sigma=0.2, N=100, option_type="put", american=True)
-price_american = bt_american.price()
-
-print(f"Prix Put Européen : {price_european:.4f}")
-print(f"Prix Put Américain : {price_american:.4f}")
