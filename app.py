@@ -16,7 +16,7 @@ def get_last_price(ticker):
         last_price = data.history(period="1d")['Close'].iloc[-1]
         return round(last_price, 2)
     except:
-        return None
+        return -1
 
 def calculate_T(maturity_date):
     today = datetime.datetime.today()
